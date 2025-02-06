@@ -2,34 +2,200 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Welcome to Hyprice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hyprice - Hyperliquid Prices & Watchlist</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #072723; color: #ffffff; text-align: center; padding: 50px; }
-    .button { background-color: #97fce4; color: #072723; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    /* Global Settings */
+    :root {
+      --primary-color: #97fce4;
+      --accent-color: #ffcc00;
+      --bg-color: #072723;
+      --text-color: #ffffff;
+      --font-family: 'Arial', sans-serif;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    a {
+      color: var(--text-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: var(--primary-color);
+    }
+    /* Header & Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
+    /* Hero Section */
+    .hero {
+      background: url('hero-background.jpg') no-repeat center center/cover;
+      padding: 100px 20px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+    .hero .btn {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero .btn:hover {
+      background-color: var(--accent-color);
+    }
+    /* Section Titles */
+    .section-title {
+      text-align: center;
+      margin: 40px 0 20px 0;
+      font-size: 32px;
+    }
+    /* About Section */
+    .about {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 20px;
+    }
+    /* Features Section */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 0 20px;
+    }
+    .feature-item {
+      flex: 1 1 250px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .feature-item h3 {
+      margin-bottom: 10px;
+    }
+    /* Roadmap Section */
+    .roadmap {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 20px;
+    }
+    /* Footer */
+    footer {
+      background: #000;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+      .hero p {
+        font-size: 18px;
+      }
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Welcome to Hyprice</h1>
-  <p id="refInfo"></p>
-  <a class="button" href="https://chrome.google.com/webstore/detail/your-extension-id">Install the Hyprice Extension</a>
+  <!-- Header & Navigation -->
+  <header>
+    <div class="logo">Hyprice</div>
+    <nav>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <script>
-    // Function to get query parameters
-    function getQueryParam(param) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(param);
-    }
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <h1>Welcome to Hyprice</h1>
+    <p>Your ultimate platform for hyperliquid prices and custom token watchlists.</p>
+    <button class="btn" onclick="window.location.href='https://chrome.google.com/webstore/detail/your-extension-id'">Install Extension</button>
+  </section>
 
-    // Check if there's a referral code in the URL
-    const referralCode = getQueryParam('ref');
-    if (referralCode) {
-      document.getElementById('refInfo').innerText = "You were referred by code: " + referralCode;
-      // Optionally, send this referral code to your backend for tracking
-      // e.g., using fetch() to an API endpoint:
-      // fetch("https://hyprice.xyz/api/trackReferral", { method: "POST", body: JSON.stringify({ ref: referralCode, timestamp: Date.now() }), headers: {"Content-Type": "application/json"} });
-    } else {
-      document.getElementById('refInfo').innerText = "No referral code found.";
-    }
-  </script>
+  <!-- About Section -->
+  <section id="about">
+    <div class="section-title">About Hyprice</div>
+    <div class="about">
+      <p>Hyprice provides real-time token prices, custom watchlists, and smart notifications to help you stay ahead in the crypto market. Our user-friendly interface and advanced analytics empower you to make informed decisions quickly.</p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <div class="section-title">Features</div>
+    <div class="features">
+      <div class="feature-item">
+        <h3>Real-Time Prices</h3>
+        <p>Access up-to-the-minute token price data and market trends.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Custom Watchlist</h3>
+        <p>Personalize your token tracking experience by creating your own watchlist.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Smart Notifications</h3>
+        <p>Get alerts on significant price changes so you never miss an opportunity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap Section -->
+  <section id="roadmap">
+    <div class="section-title">Roadmap</div>
+    <div class="roadmap">
+      <p>Our roadmap outlines our commitment to continuous improvement, with new features and updates planned to enhance your experience.</p>
+    </div>
+  </section>
+
+  <!-- Footer / Contact -->
+  <footer id="contact">
+    <p>&copy; 2025 Hyprice. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>
