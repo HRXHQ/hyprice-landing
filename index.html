@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hyprice - Hyperliquid Prices & Watchlist</title>
+  <title>Hyprice</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     /* Global Settings */
     :root {
@@ -11,16 +12,22 @@
       --accent-color: #ffcc00;
       --bg-color: #072723;
       --text-color: #ffffff;
-      --font-family: 'Arial', sans-serif;
+      --font-family: 'Helvetica', Arial, sans-serif;
+      --header-height: 60px;
     }
+    /* Remove default margins and set full viewport height */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+    }
     body {
       font-family: var(--font-family);
-      background-color: var(--bg-color);
+      background: url('custom-background.jpg') fixed no-repeat center center / cover;
       color: var(--text-color);
       line-height: 1.6;
     }
@@ -32,36 +39,51 @@
     a:hover {
       color: var(--primary-color);
     }
-    /* Header & Navigation */
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
+      /* Header padding: 5px top, 14px right, 5px bottom, 20px left */
+      padding: 5px 14px 5px 20px;
+      height: var(--header-height);
     }
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
+    .logo img {
+      width: 80px; /* Smaller SVG logo */
+      height: auto;
+      margin-left: -10px; /* Moves logo a bit to the left */
     }
-    nav ul {
-      list-style: none;
+    /* Social Links: Reduced gap to 5px */
+    .social-links {
       display: flex;
+      gap: 5px;
     }
-    nav ul li {
-      margin-left: 20px;
+    .social-links a img {
+      width: 30px;
+      height: 30px;
+      transition: transform 0.2s;
     }
-    /* Hero Section */
+    .social-links a img:hover {
+      transform: scale(1.1);
+    }
+    /* Hero Section: Vertically center the content */
     .hero {
-      background: url('hero-background.jpg') no-repeat center center/cover;
-      padding: 100px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - var(--header-height));
       text-align: center;
+      padding: 0 20px;
+    }
+    .hero-content {
+      transform: translateY(-10%);
     }
     .hero h1 {
-      font-size: 48px;
+      font-size: 42px;
       margin-bottom: 20px;
     }
     .hero p {
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 30px;
     }
     .hero .btn {
@@ -75,127 +97,49 @@
       transition: background 0.3s;
     }
     .hero .btn:hover {
-      background-color: var(--accent-color);
-    }
-    /* Section Titles */
-    .section-title {
-      text-align: center;
-      margin: 40px 0 20px 0;
-      font-size: 32px;
-    }
-    /* About Section */
-    .about {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 0 20px;
-    }
-    /* Features Section */
-    .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 0 20px;
-    }
-    .feature-item {
-      flex: 1 1 250px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
-      border-radius: 10px;
-    }
-    .feature-item h3 {
-      margin-bottom: 10px;
-    }
-    /* Roadmap Section */
-    .roadmap {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 0 20px;
-    }
-    /* Footer */
-    footer {
-      background: #000;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
+      background-color: #82e6d4; /* Slightly darker shade than #97fce4 */
     }
     /* Responsive Design */
     @media (max-width: 768px) {
       .hero h1 {
-        font-size: 36px;
+        font-size: 32px;
       }
       .hero p {
-        font-size: 18px;
-      }
-      nav ul {
-        flex-direction: column;
-        gap: 10px;
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header & Navigation -->
+  <!-- Header: Hyprice SVG Logo and Social Links -->
   <header>
-    <div class="logo">Hyprice</div>
-    <nav>
-      <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#roadmap">Roadmap</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+    <div class="logo">
+      <!-- Replace with your actual SVG logo -->
+      <img src="hyprice-logo.svg" alt="Hyprice Logo">
+    </div>
+    <div class="social-links">
+      <!-- Replace these with your actual social icon images and URLs -->
+      <a href="https://twitter.com/yourtwitter" target="_blank">
+        <img src="twitter-icon.png" alt="Twitter">
+      </a>
+      <a href="https://t.me/yourtelegram" target="_blank">
+        <img src="telegram-icon.png" alt="Telegram">
+      </a>
+      <a href="https://hyperliquid.xyz" target="_blank">
+        <img src="hyperliquid-icon.png" alt="Hyperliquid">
+      </a>
+    </div>
   </header>
-
-  <!-- Hero Section -->
+  
+  <!-- Hero Section: Vertically centered -->
   <section class="hero" id="hero">
-    <h1>Welcome to Hyprice</h1>
-    <p>Your ultimate platform for hyperliquid prices and custom token watchlists.</p>
-    <button class="btn" onclick="window.location.href='https://chrome.google.com/webstore/detail/your-extension-id'">Install Extension</button>
-  </section>
-
-  <!-- About Section -->
-  <section id="about">
-    <div class="section-title">About Hyprice</div>
-    <div class="about">
-      <p>Hyprice provides real-time token prices, custom watchlists, and smart notifications to help you stay ahead in the crypto market. Our user-friendly interface and advanced analytics empower you to make informed decisions quickly.</p>
+    <div class="hero-content">
+      <h1>Welcome to Hyprice</h1>
+      <p>Your ultimate platform for hyperliquid prices and custom token watchlists.</p>
+      <button class="btn" onclick="window.location.href='https://chrome.google.com/webstore/detail/your-extension-id'">
+        Install Extension
+      </button>
     </div>
   </section>
-
-  <!-- Features Section -->
-  <section id="features">
-    <div class="section-title">Features</div>
-    <div class="features">
-      <div class="feature-item">
-        <h3>Real-Time Prices</h3>
-        <p>Access up-to-the-minute token price data and market trends.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Custom Watchlist</h3>
-        <p>Personalize your token tracking experience by creating your own watchlist.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Smart Notifications</h3>
-        <p>Get alerts on significant price changes so you never miss an opportunity.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Roadmap Section -->
-  <section id="roadmap">
-    <div class="section-title">Roadmap</div>
-    <div class="roadmap">
-      <p>Our roadmap outlines our commitment to continuous improvement, with new features and updates planned to enhance your experience.</p>
-    </div>
-  </section>
-
-  <!-- Footer / Contact -->
-  <footer id="contact">
-    <p>&copy; 2025 Hyprice. All Rights Reserved.</p>
-  </footer>
 </body>
 </html>
