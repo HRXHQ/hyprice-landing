@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Hyprice</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #072723; color: #ffffff; text-align: center; padding: 50px; }
+    .button { background-color: #97fce4; color: #072723; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Hyprice</h1>
+  <p id="refInfo"></p>
+  <a class="button" href="https://chrome.google.com/webstore/detail/your-extension-id">Install the Hyprice Extension</a>
+
+  <script>
+    // Function to get query parameters
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
+
+    // Check if there's a referral code in the URL
+    const referralCode = getQueryParam('ref');
+    if (referralCode) {
+      document.getElementById('refInfo').innerText = "You were referred by code: " + referralCode;
+      // Optionally, send this referral code to your backend for tracking
+      // e.g., using fetch() to an API endpoint:
+      // fetch("https://hyprice.xyz/api/trackReferral", { method: "POST", body: JSON.stringify({ ref: referralCode, timestamp: Date.now() }), headers: {"Content-Type": "application/json"} });
+    } else {
+      document.getElementById('refInfo').innerText = "No referral code found.";
+    }
+  </script>
+</body>
+</html>
