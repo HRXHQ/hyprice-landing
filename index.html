@@ -168,13 +168,13 @@
       <img src="hyprice-logo.svg" alt="Hyprice Logo">
     </div>
     <div class="social-links">
-      <a href="https://twitter.com/yourtwitter" target="_blank">
+      <a href="https://x.com/HypriceX" target="_blank">
         <img src="twitter-icon.png" alt="Twitter">
       </a>
-      <a href="https://t.me/yourtelegram" target="_blank">
+      <a href="https://t.me/hyprice" target="_blank">
         <img src="telegram-icon.png" alt="Telegram">
       </a>
-      <a href="https://github.com/yourgithub" target="_blank">
+      <a href="https://github.com/HRXHQ/hyprice-landing" target="_blank">
         <img src="github-icon.png" alt="Github">
       </a>
     </div>
@@ -195,7 +195,7 @@
     </div>
   </section>
   
-  <!-- Initialize Vanta.NET for Networking Particles -->
+  <!-- Initialize Vanta.NET and Custom Cursor Script -->
   <script>
     document.addEventListener('DOMContentLoaded', function(){
       VANTA.NET({
@@ -224,7 +224,7 @@
         referralNotice.innerText = "Referred by: " + refCode;
       }
       
-      // Smooth custom cursor movement with trailing effect on canvas
+      // Custom cursor and trailing effect
       const cursor = document.getElementById("cursor");
       const trailCanvas = document.getElementById("cursorTrail");
       const ctx = trailCanvas.getContext("2d");
@@ -236,13 +236,10 @@
       const minThickness = 1;
       const maxThickness = 4;
       
-      // For smooth cursor movement, use interpolation
-      let currentX = window.innerWidth / 2, currentY = window.innerHeight / 2;
-      let mouseX = currentX, mouseY = currentY;
-      
+      // Update custom cursor position immediately on mousemove
       document.addEventListener("mousemove", function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        cursor.style.transform = "translate(" + (e.clientX - 4) + "px, " + (e.clientY - 4) + "px)";
+        
         // Add the current mouse position to the trail array
         trail.push({ x: e.clientX, y: e.clientY });
         if (trail.length > maxTrailPoints) {
@@ -272,15 +269,6 @@
         requestAnimationFrame(drawTrail);
       }
       drawTrail();
-      
-      function animateCursor() {
-        // Smoothly interpolate cursor position toward mouse position
-        currentX += (mouseX - currentX) * 0.2;
-        currentY += (mouseY - currentY) * 0.2;
-        cursor.style.transform = "translate(" + (currentX - 4) + "px, " + (currentY - 4) + "px)";
-        requestAnimationFrame(animateCursor);
-      }
-      requestAnimationFrame(animateCursor);
     });
   </script>
 </body>
