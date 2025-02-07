@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hyprice</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Include Three.js and Vanta.NET from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
   <style>
     /* Global Settings */
     :root {
@@ -27,7 +30,7 @@
     }
     body {
       font-family: var(--font-family);
-      background: url('custom-background.jpg') fixed no-repeat center center / cover;
+      background: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
     }
@@ -39,21 +42,29 @@
     a:hover {
       color: var(--primary-color);
     }
+    /* Vanta Background Container */
+    #vanta-net {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
     /* Header */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      /* Header padding: 5px top, 14px right, 5px bottom, 20px left */
-      padding: 5px 14px 5px 20px;
+      /* Top: 5px, Right: 10px, Bottom: 5px, Left: 20px */
+      padding: 5px 10px 5px 20px;
       height: var(--header-height);
     }
     .logo img {
       width: 80px; /* Smaller SVG logo */
       height: auto;
-      margin-left: -10px; /* Moves logo a bit to the left */
+      margin-left: -10px;
     }
-    /* Social Links: Reduced gap to 5px */
     .social-links {
       display: flex;
       gap: 5px;
@@ -78,32 +89,46 @@
     .hero-content {
       transform: translateY(-10%);
     }
+    /* Custom Hero Image */
+    .hero-content img {
+      max-width: 80%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+    /* Hide the h1 element (since we are using a custom image) */
     .hero h1 {
-      font-size: 42px;
-      margin-bottom: 20px;
+      display: none;
     }
+    /* Info Text */
     .hero p {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 30px;
+      line-height: 1.4;
     }
+    /* Install Extension Button */
     .hero .btn {
       background-color: var(--primary-color);
       color: var(--bg-color);
-      padding: 15px 30px;
-      font-size: 18px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
       border: none;
-      border-radius: 5px;
+      border-radius: 30px;
       cursor: pointer;
       transition: background 0.3s;
+      margin-top: -10px; /* Moves the button upward slightly */
     }
     .hero .btn:hover {
-      background-color: #82e6d4; /* Slightly darker shade than #97fce4 */
+      background-color: #82e6d4;
+    }
+    .referral-notice {
+      text-align: center;
+      font-size: 14px;
+      color: var(--accent-color);
+      margin-top: 10px;
     }
     /* Responsive Design */
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 32px;
-      }
       .hero p {
         font-size: 16px;
       }
@@ -111,35 +136,74 @@
   </style>
 </head>
 <body>
-  <!-- Header: Hyprice SVG Logo and Social Links -->
+  <!-- Vanta Background Container -->
+  <div id="vanta-net"></div>
+  
+  <!-- Header: Hyprice Logo and Social Links -->
   <header>
     <div class="logo">
       <!-- Replace with your actual SVG logo -->
       <img src="hyprice-logo.svg" alt="Hyprice Logo">
     </div>
     <div class="social-links">
-      <!-- Replace these with your actual social icon images and URLs -->
+      <!-- Replace with your actual social icon images and URLs -->
       <a href="https://twitter.com/yourtwitter" target="_blank">
         <img src="twitter-icon.png" alt="Twitter">
       </a>
       <a href="https://t.me/yourtelegram" target="_blank">
         <img src="telegram-icon.png" alt="Telegram">
       </a>
-      <a href="https://hyperliquid.xyz" target="_blank">
-        <img src="hyperliquid-icon.png" alt="Hyperliquid">
+      <a href="https://github.com/yourgithub" target="_blank">
+        <img src="github-icon.png" alt="Github">
       </a>
     </div>
   </header>
   
-  <!-- Hero Section: Vertically centered -->
+  <!-- Hero Section: Vertically Centered Content -->
   <section class="hero" id="hero">
     <div class="hero-content">
-      <h1>Welcome to Hyprice</h1>
-      <p>Your ultimate platform for hyperliquid prices and custom token watchlists.</p>
+      <!-- Custom Hero Image -->
+      <img src="custom-hero.png" alt="Hyprice Custom Hero">
+      <p>
+        The ultimate extension for Hyperliquid price tracking<br>
+        and personalized token watchlists.
+      </p>
       <button class="btn" onclick="window.location.href='https://chrome.google.com/webstore/detail/your-extension-id'">
         Install Extension
       </button>
+      <div id="referralNotice" class="referral-notice" style="display: none;"></div>
     </div>
   </section>
+  
+  <!-- Initialize Vanta.NET for Networking Particles -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      VANTA.NET({
+        el: "#vanta-net",
+        color: 0x10594f,
+        backgroundColor: 0x072723,
+        points: 12,
+        maxDistance: 20,
+        spacing: 15,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200,
+        minWidth: 200
+      });
+      
+      // Referral Script: Display referral code if present in URL
+      function getQueryParam(param) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(param);
+      }
+      const refCode = getQueryParam('ref');
+      if (refCode) {
+        const referralNotice = document.getElementById('referralNotice');
+        referralNotice.style.display = 'block';
+        referralNotice.innerText = "Referred by: " + refCode;
+      }
+    });
+  </script>
 </body>
 </html>
