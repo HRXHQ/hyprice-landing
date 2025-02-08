@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hyprice</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Open Graph Meta Tags for social sharing -->
+  <meta property="og:title" content="Hyprice">
+  <meta property="og:description" content="The ultimate extension for Hyperliquid price tracking and personalized token watchlists.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/HRXHQ/hyprice-landing/refs/heads/main/referral_thumb.jpg">
+  <meta property="og:url" content="https://hyprice.xyz/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hyprice">
+  <meta name="twitter:description" content="The ultimate extension for Hyperliquid price tracking and personalized token watchlists.">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/HRXHQ/hyprice-landing/refs/heads/main/referral_thumb.jpg">
+
   <!-- Include Three.js and Vanta.NET for the background effect -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
@@ -33,7 +47,7 @@
       background: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
-      cursor: none; /* Hide the default cursor */
+      cursor: none; /* Hide the default cursor on desktop */
     }
     a {
       color: var(--text-color);
@@ -78,7 +92,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 10px 5px 20px; /* Top: 5px, Right: 10px, Bottom: 5px, Left: 20px */
+      padding: 5px 10px 5px 20px;
       height: var(--header-height);
     }
     .logo img {
@@ -138,16 +152,23 @@
     .hero .btn:hover {
       background-color: #82e6d4;
     }
+    /* Referral Notice */
     .referral-notice {
       text-align: center;
       font-size: 14px;
-      color: var(--accent-color);
+      font-family: 'Helvetica', Arial, sans-serif;
+      font-weight: bold;
+      color: var(--primary-color);
       margin-top: 10px;
     }
-    /* Responsive Design */
+    /* Hide custom cursor elements on mobile */
     @media (max-width: 768px) {
-      .hero p {
-        font-size: 16px;
+      #cursor, #cursorTrail {
+        display: none;
+      }
+      /* Reset cursor style on mobile if needed */
+      body {
+        cursor: default;
       }
     }
   </style>
@@ -188,7 +209,7 @@
         The ultimate extension for Hyperliquid price tracking<br>
         and personalized token watchlists.
       </p>
-      <button class="btn" onclick="window.location.href='https://chrome.google.com/webstore/detail/your-extension-id'">
+      <button class="btn" onclick="window.location.href='https://chromewebstore.google.com/detail/hyprice/kgppoelpabjojmmchdaclmfflkifhgpj'">
         Install Extension
       </button>
       <div id="referralNotice" class="referral-notice" style="display: none;"></div>
@@ -224,51 +245,50 @@
         referralNotice.innerText = "Referred by: " + refCode;
       }
       
-      // Custom cursor and trailing effect
-      const cursor = document.getElementById("cursor");
-      const trailCanvas = document.getElementById("cursorTrail");
-      const ctx = trailCanvas.getContext("2d");
-      trailCanvas.width = window.innerWidth;
-      trailCanvas.height = window.innerHeight;
-      
-      let trail = [];
-      const maxTrailPoints = 20;
-      const minThickness = 1;
-      const maxThickness = 4;
-      
-      // Update custom cursor position immediately on mousemove
-      document.addEventListener("mousemove", function(e) {
-        cursor.style.transform = "translate(" + (e.clientX - 4) + "px, " + (e.clientY - 4) + "px)";
+      // Only initialize custom cursor and trail for desktop devices
+      if (window.innerWidth > 768) {
+        const cursor = document.getElementById("cursor");
+        const trailCanvas = document.getElementById("cursorTrail");
+        const ctx = trailCanvas.getContext("2d");
+        trailCanvas.width = window.innerWidth;
+        trailCanvas.height = window.innerHeight;
         
-        // Add the current mouse position to the trail array
-        trail.push({ x: e.clientX, y: e.clientY });
-        if (trail.length > maxTrailPoints) {
-          trail.shift();
+        let trail = [];
+        const maxTrailPoints = 20;
+        const minThickness = 1;
+        const maxThickness = 4;
+        
+        // Update custom cursor position immediately on mousemove
+        document.addEventListener("mousemove", function(e) {
+          cursor.style.transform = "translate(" + (e.clientX - 4) + "px, " + (e.clientY - 4) + "px)";
+          // Add the current mouse position to the trail array
+          trail.push({ x: e.clientX, y: e.clientY });
+          if (trail.length > maxTrailPoints) {
+            trail.shift();
+          }
+        });
+        
+        function drawTrail() {
+          ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+          if (trail.length < 2) return;
+          // Draw segments between consecutive trail points with varying thickness
+          for (let i = 0; i < trail.length - 1; i++) {
+            const start = trail[i];
+            const end = trail[i + 1];
+            let t = i / (trail.length - 1);
+            let lineWidth = minThickness + (1 - t) * (maxThickness - minThickness);
+            let opacity = 0.3 + (1 - t) * 0.7; // opacity between 0.3 and 1
+            ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
+            ctx.lineWidth = lineWidth;
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.lineTo(end.x, end.y);
+            ctx.stroke();
+          }
+          requestAnimationFrame(drawTrail);
         }
-      });
-      
-      function drawTrail() {
-        ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
-        if (trail.length < 2) return;
-        // Draw segments between consecutive trail points with varying thickness
-        for (let i = 0; i < trail.length - 1; i++) {
-          const start = trail[i];
-          const end = trail[i + 1];
-          // Compute interpolation factor: newest segment (end of array) thicker, oldest thinner
-          let t = i / (trail.length - 1);
-          let lineWidth = minThickness + (1 - t) * (maxThickness - minThickness);
-          // Set opacity so that newer segments are more opaque
-          let opacity = 0.3 + (1 - t) * 0.7; // opacity between 0.3 and 1
-          ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
-          ctx.lineWidth = lineWidth;
-          ctx.beginPath();
-          ctx.moveTo(start.x, start.y);
-          ctx.lineTo(end.x, end.y);
-          ctx.stroke();
-        }
-        requestAnimationFrame(drawTrail);
+        drawTrail();
       }
-      drawTrail();
     });
   </script>
 </body>
